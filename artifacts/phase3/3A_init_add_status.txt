@@ -1,0 +1,17 @@
+$ "/mnt/c/Users/mukul/OneDrive/文件/PES1UG24AM387-pes-vcs/pes" init
+Initialized empty PES repository in .pes/
+
+$ echo "hello" > file1.txt
+$ echo "world" > file2.txt
+$ "/mnt/c/Users/mukul/OneDrive/文件/PES1UG24AM387-pes-vcs/pes" add file1.txt file2.txt
+$ "/mnt/c/Users/mukul/OneDrive/文件/PES1UG24AM387-pes-vcs/pes" status
+Staged changes:
+  staged:     file1.txt
+  staged:     file2.txt
+
+Unstaged changes:
+  (nothing to show)
+
+Untracked files:
+  (nothing to show)
+
