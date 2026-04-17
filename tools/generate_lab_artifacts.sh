@@ -18,7 +18,7 @@ render() {
     local input="$1"
     local output="$2"
     local title="$3"
-    python3 "$render_py" "$input" "$output" --title "$title"
+    python.exe "$render_py" "$input" "$output" --title "$title"
 }
 
 mkdir -p "$repo_root/artifacts/phase1" \
