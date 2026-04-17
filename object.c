@@ -300,12 +300,20 @@ int object_read(const ObjectID *id, ObjectType *type_out, void **data_out, size_
 
     void *payload = NULL;
     if (data_len > 0) {
-        payload = malloc(data_len);
+        payload = malloc(data_len + 1);
         if (!payload) {
             free(raw);
             return -1;
         }
         memcpy(payload, raw + payload_offset, data_len);
+        ((uint8_t *)payload)[data_len] = '\0';
+    } else {
+        payload = malloc(1);
+        if (!payload) {
+            free(raw);
+            return -1;
+        }
+        ((uint8_t *)payload)[0] = '\0';
     }
 
     *type_out = parsed_type;
