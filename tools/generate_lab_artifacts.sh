@@ -3,6 +3,7 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "$0")/.." && pwd)"
 render_py="$repo_root/tools/render_terminal_capture.py"
+render_py_win="$(wslpath -w "$render_py")"
 export PES_AUTHOR="Pranaav P. <PES1UG24AM387>"
 
 capture() {
@@ -18,7 +19,7 @@ render() {
     local input="$1"
     local output="$2"
     local title="$3"
-    python.exe "$render_py" "$input" "$output" --title "$title"
+    python.exe "$render_py_win" "$(wslpath -w "$input")" "$(wslpath -w "$output")" --title "$title"
 }
 
 mkdir -p "$repo_root/artifacts/phase1" \
@@ -111,5 +112,10 @@ render "$repo_root/artifacts/phase4/4B_find_pes_files.txt" "$repo_root/screensho
 render "$repo_root/artifacts/phase4/4C_refs_and_head.txt" "$repo_root/screenshots/4C_refs_and_head.png" "Phase 4C - refs and HEAD"
 
 cd "$repo_root"
-capture "$repo_root/artifacts/phase4/final_integration_test.txt" make test-integration
+{
+    printf '$ export PES_AUTHOR="Pranaav P. <PES1UG24AM387>"\n'
+    printf '$ perl -0pe '\''s/\\r\\n/\\n/g'\'' test_sequence.sh | bash\n'
+    export PES_AUTHOR="Pranaav P. <PES1UG24AM387>"
+    perl -0pe 's/\r\n/\n/g' test_sequence.sh | bash
+} >"$repo_root/artifacts/phase4/final_integration_test.txt" 2>&1
 render "$repo_root/artifacts/phase4/final_integration_test.txt" "$repo_root/screenshots/final_integration_test.png" "Final - make test-integration"
