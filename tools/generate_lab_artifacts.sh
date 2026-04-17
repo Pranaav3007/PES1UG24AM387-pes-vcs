@@ -28,6 +28,7 @@ mkdir -p "$repo_root/artifacts/phase1" \
          "$repo_root/artifacts/phase4" \
          "$repo_root/artifacts/runtime" \
          "$repo_root/screenshots"
+rm -rf "$repo_root/artifacts/runtime/"*
 
 cd "$repo_root"
 make clean
@@ -119,3 +120,5 @@ cd "$repo_root"
     perl -0pe 's/\r\n/\n/g' test_sequence.sh | bash
 } >"$repo_root/artifacts/phase4/final_integration_test.txt" 2>&1
 render "$repo_root/artifacts/phase4/final_integration_test.txt" "$repo_root/screenshots/final_integration_test.png" "Final - make test-integration"
+
+rm -rf "$repo_root/artifacts/runtime/"*
